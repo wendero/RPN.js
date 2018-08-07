@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en-US">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>RPN.js | Test Page</title>
+    <script type="text/javascript" src="../src/rpn.js"></script>
+    <script type="text/javascript" src="../src/rpn.test.js"></script>
+    <style>
+        body {
+            font: 12px Verdana;
+        }
+
+        div.test {
+            padding: 2px;
+            margin-bottom: 10px;
+        }
+
+        div.test.PASS > span:first-child {
+            background-color: green;
+        }
+
+        div.test.FAIL > span:first-child {
+            background-color: red;
+        }
+
+        div.test > span:first-child {
+            display: inline-block;
+            width: 40px;
+            text-align: center;
+            /* border: 1px solid black; */
+            color: white;
+            margin-right: 5px;
+        }
+        div.test > span:nth-child(2)
+        {
+            font-weight: bold;
+        }
+        div.test > div {
+            margin-left: 48px;
+        }
+        div.test > div > span:first-child {
+margin-right: 20px;
+        }
+        code {
+            display: inline-block;
+            background-color: #ddd;
+            border-radius: 3px;
+            padding: 3px 6px 3px 6px;
+        }
+        code.objects {
+            margin-left: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>RPN.js | Test Page</h1>
+    <script defer>
+        function Run() {
+            RPN.Test("Simple add", "1 1 + 2 2 2 + + +", 8);
+            RPN.Test("Simple subtract", "1 1 - 2 2 2 - - -", -2);
+            RPN.Test("Simple times", "2 5 * 2 3 * *", 60);
+            RPN.Test("Simple divide", "20 2 / 2 /", 5);
+            RPN.Test("Greater than", "5 3 >", true);
+            RPN.Test("Lesser than", "5 3 <", false);
+            RPN.Test("Equals", "3 3 =", true);
+            RPN.Test("Different", "3 3 !=", false);
+            RPN.Test("Logical And", "true true &", true);
+            RPN.Test("Logical Or", "true false |", true);
+            RPN.Test("Logical Not", "true !", false);
+            RPN.Test("Greater than or equals", "5 3 >= 3 3 >= &", true);
+            RPN.Test("Lesser than or equals", "3 5 <= 3 3 <= &", true);
+            RPN.Test("Increase 1", "5 ++", 6);
+            RPN.Test("Decrease 1", "5 --", 4);
+            RPN.Test("Pop (discard entry)", "3 5 pop", 3);
+            RPN.Test("Clear stack", "10 20 30 40 50 5 3 2 clr 1", 1);
+            RPN.Test("Max", "10 20 30 40 50 5 3 2 max", 50);
+            RPN.Test("Min", "10 20 30 40 50 5 3 2 min", 2);
+            RPN.Test("Return", "10 20 30 40 50 5 3 20 ret 30", 20);
+            RPN.Test("Return ", "10 20 30 40 50 5 3 20 Bazinga ret", "Bazinga");
+            RPN.Test("Return If", "tapang bazinga false ! retif", "bazinga");
+            RPN.Test("PI", "pi", Math.PI);
+            RPN.Test("Pow", "3 2 pow", Math.pow(3, 2));
+            RPN.Test("Log", "pi log", Math.log(Math.PI));
+            RPN.Test("Abs", "-1 abs", 1);
+            RPN.Test("Round", "pi 2 round", 3.14);
+            RPN.Test("Log base x", "100 10 logb", 2);
+            RPN.Test("Lob base 10", "pi log10", Math.log10(Math.PI));
+            RPN.Test("Exp", "pi exp", Math.exp(Math.PI));
+            RPN.Test("Sum", "1 2 3 5 8 13 21 sum", 53);
+            RPN.Test("Sum k items", "1 2 3 5 8 13 21 3 sumk", 42);
+            RPN.Test("Sin", "pi sin", Math.sin(Math.PI));
+            RPN.Test("Cos", "pi cos", Math.cos(Math.PI));
+            RPN.Test("Tan", "0.5 tan", Math.tan(0.5));
+            RPN.Test("ASin", "0.5 asin", Math.asin(0.5));
+            RPN.Test("ACos", "0.5 acos", Math.acos(0.5));
+            RPN.Test("ATan", "0.5 atan", Math.atan(0.5));
+            RPN.Test("SinH", "pi sinh", Math.sinh(Math.PI));
+            RPN.Test("CosH", "pi cosh", Math.cosh(Math.PI));
+            RPN.Test("TanH", "0.5 tanh", Math.tanh(0.5));
+            RPN.Test("ATan2", "0.6 0.7 atan2", Math.atan2(0.6, 0.7));
+            RPN.Test("Ceiling", "3.12534 ceiling", Math.ceil(3.12534));
+            RPN.Test("Floor", "pi floor", Math.floor(Math.PI));
+            RPN.Test("Truncate", "pi truncate", Math.trunc(Math.PI));
+            RPN.Test("Sqrt", "230 230 * sqrt", 230);
+            RPN.Test("Simple Block", "@a 10 20 + @a 3 @@a + 11 /", 3);
+            RPN.Test("If", "true 10 if", 10);
+            RPN.Test("If", "5 false 10 if", 5);
+            RPN.Test("If-then-Else", "5 true 10 20 ife", 10);
+            RPN.Test("If-then-Else", "5 false 10 20 ife", 20);
+            RPN.Test("Case", "3 1 um case 2 dois case 3 tres case end", "tres");
+            RPN.Test("Case", "1 1 um case 2 dois case 3 tres case end", "um");
+            RPN.Test("Case", "5 1 um case 2 dois case 3 tres case outro end", "outro");
+            RPN.Test("String upper case", "bazinga ucase", "BAZINGA");
+            RPN.Test("String lower case", "BAZINGA lcase", "bazinga");
+            RPN.Test("Single Parameter", "$0.Num 1 +", 3, [{
+                Num: 2
+            }]);
+            RPN.Test("Multiple Parameters", "$0.Num $1.Num min", 2, [{
+                Num: 2
+            }, {
+                Num: 5
+            }]);
+            RPN.Test("Multiple Parameters", "$0.Num $1.Num max", 5, [{
+                Num: 2
+            }, {
+                Num: 5
+            }]);
+            RPN.Test("Multiple Parameters", "$0 $1 +", 5, [2, 3]);
+
+            let m1 = {
+                Num: 5,
+                Label: "bazinga",
+                SubMock: {
+                    Num: 11
+                }
+            };
+            let m2 = {
+                Num: 51,
+                Label: "tapang",
+                SubMock: {
+                    Num: 22
+                }
+            };
+            let arr = [m1, m2];
+
+            RPN.Test("Array", "$0[0].Num $0[1].Num $1 + +", 59, [arr, 3]);
+            RPN.Test("Array", "$0[0].Num $0[1].Num +", 56, [arr]);
+            RPN.Test("Array", "$0[0].Num $0[1].Num + $0.length /", 28, [arr]);
+            RPN.Test("Dictionary", "$0[abc].Num $0[def].Num +", 56, [{
+                abc: m1,
+                def: m2
+            }]);
+            RPN.Test("Collection", "$0", arr, [arr]);
+            RPN.Test("Spread", "$0 Num ... sum", 56, [arr]);
+            RPN.Test("String", "`asdfg`", "asdfg");
+            RPN.Test("String", "$0.Label ucase $1.Label lcase $2 `{0}  {1} :: {2}.` strfmt",
+                "BAZINGA  tapang :: the quick brown fox jumps over the lazy dog.", [m1, m2,
+                    "the quick brown fox jumps over the lazy dog"
+                ]);
+            let date = new Date(2018, 11, 31, 23, 59, 58, 123);
+            RPN.Test("New Date", '2018 12 31 23 59 58 123 7 date default todate', '2018-12-31 23:59:58');
+            RPN.Test("Custom Date", '2018 12 31 23 59 58 123 7 date `dd/MM/yyyy HH:mm:ss` todate',
+                '31/12/2018 23:59:58');
+            RPN.Test("From Index", "10 20 30 40 3 1 fromindex", 30);
+            RPN.Test("Stringify", "$0 stringify", '{"Name":"Bazinga"}', [{
+                Name: 'Bazinga'
+            }]);
+            RPN.Test("Parse", '`{"Name":"Bazinga"}` parse $0.Name', 'Bazinga');
+            RPN.Test("Percent", "500 10% +", 550);
+            RPN.Test("Percent", "500 20% -", 400);
+            RPN.Test("Percentage", "1000 666 perc", 67);
+            RPN.Test("Pop X", "1 2 4 8 50 16 32 64 3 popx sum", 127);
+            RPN.Test("%", "11 3 %", 2);
+        }
+        Run();
+    </script>
+</body>
+
+</html>
