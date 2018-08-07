@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en-US">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>RPN.js | RPN Evaluator</title>
+    <script type="text/javascript" src="../src/rpn.js"></script>
+    <style>
+        body {
+            font: 12px Verdana;
+        }
+
+        div.editor {
+            height: 200px;
+            width: 400px;
+            border: 1px solid black;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 5px;
+            color: gray;
+        }
+
+        div.help {
+            color: gray;
+            font-style: italic;
+            font-size: 0.8em;
+            margin-bottom: 10px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        div.col {
+            min-width: 400px;
+            display: inline-block;
+            float: left;
+            margin-right: 50px;
+        }
+
+        div.results {
+            border: 1px solid blue;
+            background-color: #eef;
+            min-height: 200px;
+            padding: 5px;
+            color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>RPN.js | RPN Evaluator</h1>
+    <div class="col">
+        <label for="rpn">RPN</label>
+        <div id="rpn" class="editor" contenteditable="true">
+        </div>
+        <div class="help">Example: 5 2 *</div>
+        <div style="margin-bottom: 20px;">
+            <button id="eval" onclick="Evaluate()">
+                Evaluate RPN
+            </button>
+        </div>
+        <label for="objects">Objects (JSON array)</label>
+        <div id="objects" class="editor" contenteditable="true">
+        </div>
+        <div class="help">Example: [{ "Num": 2 }, { "Num": 3 }]</div>
+        <button id="validate" onclick="ValidateJson()">
+            Validate JSON
+        </button>
+        <span id="message"></span>
+    </div>
+    <div class="col">
+        <label for="results">Results</label>
+        <div id="results" class="results">
+        </div>
+    </div>
+
+
+    <script defer>
+        function ValidateJson() {
+            var div = document.getElementById('objects').innerText;
+            if (!div) {
+                document.getElementById('message').innerText = '';
+                return false;
+            }
+            try {
+                var json = JSON.parse(div);
+                document.getElementById('message').innerText = 'JSON is Valid';
+
+                return json;
+            } catch (e) {
+                console.log(e);
+                document.getElementById('message').innerText = 'JSON is NOT Valid';
+                return false;
+            }
+        }
+
+        function Evaluate() {
+            var div = document.getElementById('rpn').innerText;
+            if (!div) {
+                document.getElementById('message').innerText = '';
+                return false;
+            }
+            try {
+                var objects = ValidateJson();
+                objects = objects ? objects : null;
+                var rpn = RPN.Eval(div, objects);
+                document.getElementById('results').innerText = rpn;
+            } catch (e) {
+                console.log(e);
+                document.getElementById('results').innerText = 'RPN cannot be evaluated';
+                return false;
+            }
+        }
+    </script>
+</body>
+</html>
