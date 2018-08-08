@@ -28,6 +28,7 @@ div.calculator div.info span {
   font-weight: bold;
   padding: 1px 2px 1px 2px;
   border-radius: 3px;
+  opacity: 0.3;
 }
 div.calculator div.display {
   position: relative;
@@ -73,8 +74,41 @@ div.calculator div.keyboard table table tr td {
   text-align: center;
 }
 div.calculator div.keyboard table.keys td {
+  position: relative;
   cursor: pointer;
+  font-size: 16px;
 }
 div.calculator div.keyboard table.keys td:hover {
   background-color: #111;
+}
+div.calculator div.keyboard table.keys td.control-key {
+  background-color: magenta;
+}
+div.calculator div.keyboard table.keys td.control-key:hover {
+  background-color: #ff66ff;
+}
+div.calculator div.keyboard table.keys td span.ctrl {
+  display: inline-block;
+  position: absolute;
+  top: 1px;
+  right: 3px;
+}
+div.calculator.ctrl .keyboard td:not(.control-key) {
+  color: rgba(255, 255, 255, 0.1);
+}
+div.calculator.ctrl .keyboard td.control-key {
+  background-color: #cc00cc !important;
+}
+div.calculator.ctrl span.ctrl {
+  font-size: 0.8em;
+  opacity: 1;
+  color: magenta;
+}
+div.calculator.ctrl div.info span#f2nd {
+  opacity: 1;
+}
+div.calculator:not(.ctrl) span.ctrl {
+  font-size: 0.8em;
+  opacity: 0.3;
+  color: magenta;
 }

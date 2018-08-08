@@ -20,7 +20,7 @@ div.calculator {
         padding-left: 5px;
         padding-right: 5px;
         padding-bottom: 1px;
-
+        
         span {
             background-color: darkslategray;
             color: white;
@@ -28,6 +28,7 @@ div.calculator {
             font-weight: bold;
             padding: 1px 2px 1px 2px;
             border-radius: 3px;
+            opacity: 0.3;
         }
     }
     div.display {
@@ -81,12 +82,50 @@ div.calculator {
             }
 
             &.keys td {
+                position: relative;
                 cursor: pointer;
+                font-size: 16px;
                 &:hover {
                     background-color: #111;
                 }
+                &.control-key {
+                    background-color: magenta;
+                    &:hover {
+                        background-color: lighten(magenta, 20%);
+                    }
+                }
             }
-
+            &.keys td span.ctrl {
+                display: inline-block;
+                position: absolute;
+                top: 1px;
+                right: 3px;
+            }
+        }
+    }
+    &.ctrl {
+        .keyboard td:not(.control-key)
+        {
+            color: rgba(255, 255, 255, 0.1);
+        }
+        .keyboard td.control-key
+        {
+            background-color: darken(magenta, 10%) !important;
+        }
+        span.ctrl {
+            font-size: 0.8em;
+            opacity: 1;
+            color: magenta;
+        }
+        div.info span#f2nd {
+            opacity: 1;
+        }
+    }
+    &:not(.ctrl) {
+        span.ctrl {
+            font-size: 0.8em;
+            opacity: 0.3;
+            color: magenta;
         }
     }
 }
