@@ -5,18 +5,19 @@ class RPN {
             this.OPERATORS = [
                 "+", "-", "*", "/", ">", "<", "=", "==", "!=", "<>", ">=", "<=", "++", "--", "+=", "-=",
                 "pop", "popx", "min", "max", "clr", "not", "!", "ret", "retif", "&", "&&", "and", "|", "||", "or", "if", "ife",
-                "case", "end", "pi", "%", "^", "pow", "log", "round", "exp", "logb", "log10", "abs", "ucase",
+                "case", "end", "pi", "%", "mod", "^", "pow", "log", "round", "exp", "logb", "log10", "abs", "ucase",
                 "lcase", "strfmt", "sum", "sumk", "sin", "cos", "tan", "acos", "asin", "atan", "sinh", "cosh", "tanh",
                 "atan2", "ceiling", "ceil", "floor", "truncate", "trunc", "sqrt", "todate", "fromindex",
-                "&gt;", "&lt;", "&amp;", "&amp;&amp;", "&lt;&gt;", "&lt;=", "&gt;=", "stringify", "parse", "data", "date", "perc"
+                "&gt;", "&lt;", "&amp;", "&amp;&amp;", "&lt;&gt;", "&lt;=", "&gt;=", "stringify", "parse", "data", "date", "perc",
+                "E", "10x", "+-", "-+"
             ];
-            this.HTMLOPERATOR = [
-
-            ]
         }
     }
 
-    static Eval(rpn, objects) {
+    static Single(rpn) {
+        return this.Eval(rpn, null, true);
+    }
+    static Eval(rpn, objects, singleOperation) {
         this.Init();
 
         let data = objects ? objects : [];
@@ -161,6 +162,12 @@ class RPN {
                             stack.push(b - 1);
                             break;
                         }
+                    case "-+":
+                    case "+-":
+                        {
+                            stack.push(stack.pop() * (-1));
+                            break;
+                        }
                     case "pop":
                         {
                             stack.pop();
@@ -211,12 +218,13 @@ class RPN {
                         stack.push(Math.PI);
                         break;
                     case "%":
+                    case "mod":
                         {
                             let x = stack.pop();
                             let y = stack.pop();
                             stack.push(y % x);
+                            break;
                         }
-                        break;
                     case "^":
                     case "pow":
                         {
@@ -295,6 +303,10 @@ class RPN {
                         break;
                     case "exp":
                         stack.push(Math.exp(stack.pop()));
+                        break;
+                    case "10x":
+                    case "E":
+                        stack.push(Math.pow(10, stack.pop()) * stack.pop());
                         break;
                     case "logb":
                         {
@@ -446,23 +458,6 @@ class RPN {
                     case "data":
                         data.push(stack.pop());
                         break;
-                    // case "strfmt":
-                    //     {
-                    //         let str = stack.pop().replace("\\.", "&dot;");
-                    //         let newStr = "";
-                    //         let reverse = str.split("").reverse();
-                    //         for (let ix = 0; ix < reverse.length; ix++) {
-                    //             if (reverse[ix] == 'x')
-                    //                 newStr = stack.pop() + newStr;
-                    //             else if (reverse[ix] == '.')
-                    //                 newStr = " " + newStr;
-                    //             else
-                    //                 newStr = reverse[ix] + newStr;
-                    //         }
-
-                    //         stack.push(newStr.replace("&dot;", "."));
-                    //         break;
-                    //     }
                     case "strfmt":
                         {
                             let str = stack.pop();
@@ -482,6 +477,9 @@ class RPN {
                             stack.push(str);
                         }
                         break;
+                }
+                if (singleOperation) {
+                    return stack;
                 }
             } else if (s.startsWith("@(")) {
                 let str = [];
@@ -541,7 +539,6 @@ class RPN {
                 }
             } else if (s.endsWith("%")) {
                 s = s.slice(0, -1);
-                console.log(s);
                 let num = Number.parseFloat(s);
                 let a = stack.pop();
                 let b = a * (num / 100);
@@ -574,6 +571,10 @@ class RPN {
                 stack.push(s);
             }
         }
+        if (singleOperation) {
+            return stack;
+        }
+
         return stack.pop();
     }
     static GetPropertyValue(propertyName, obj) {
