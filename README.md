@@ -3,6 +3,26 @@ RPN.js is a Javascript library for Reverse Polish Notation (RPN).
 
 A easy way to include external logic into your projects.
 
+## Usage
+
+### Full Evaluation
+Full Evaluation function is able to process a full expression at once and returns its value:
+
+<code>console.log(RPN.Eval("3 5 * 2 / 7.5 + 15 / 1 =="));</code>
+
+*Output:*
+
+<code>true</code>
+
+### Single Evaluation
+Single Evaluation will process just the latest operation and return the resultant stack:
+
+<code>console.log(RPN.Single("5 5 2 *"));</code>
+
+*Output:*
+
+<code>[ 5, 10 ]</code>
+
 ## Basic Operations
 | Operation | Operator | Description | Example | Result |
 | --- |:---:| --- | --- | ---:|
@@ -19,7 +39,9 @@ A easy way to include external logic into your projects.
 | --- |:---:| --- | --- | ---:|
 | &pi; | pi | Constant value of &pi; | pi | 3.14159265358979 |
 | Exponentiation | pow | a pow b | 3 2 pow | 9 |
+| Powers of 10 | E | x &times; 10<sup>y</sup> | 3 3 E | 3000 |
 | Absolute | abs | Absolute value of a number | -1 abs | 1 |
+| Sign change | +- | Sign change | 5 +- | -5 |
 | Round | round | Rounds a at b decimal places | pi 2 round | 3.14 |
 | Ceiling | ceiling | Rounds up | 3.12534 ceiling | 4 |
 | Floor | floor | Rounds down | pi floor | 3 |
