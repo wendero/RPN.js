@@ -176,7 +176,9 @@
             RPN.Test("Percent", "500 20% -", 400);
             RPN.Test("Percentage", "1000 666 perc", 67);
             RPN.Test("Pop X", "1 2 4 8 50 16 32 64 3 popx sum", 127);
-            RPN.Test("%", "11 3 %", 2);
+            RPN.Test("Modulus", "11 3 %", 2);
+            RPN.Test("Powers of 10", "3 3 E", 3000);
+            RPN.Test("Sign Change", "5 +-", -5);
         }
         Run();
     </script>

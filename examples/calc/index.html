@@ -11,34 +11,184 @@
 
 <body>
     <div class="calculator">
-        <div class="visor"></div>
-        <div class="keyboard">
-            <div class="functions"></div>
-            <div class="operations"></div>
-            <div class="pad">
-                <div class="key"></div>
-                <div class="key">7</div>
-                <div class="key">8</div>
-                <div class="key">9</div>
-                <div class="key">/</div>
-                <div class="key"></div>
-                <div class="key">4</div>
-                <div class="key">5</div>
-                <div class="key">6</div>
-                <div class="key">*</div>
-                <div class="key"></div>
-                <div class="key">1</div>
-                <div class="key">2</div>
-                <div class="key">3</div>
-                <div class="key">-</div>
-                <div class="key">ON</div>
-                <div class="key">0</div>
-                <div class="key">.</div>
-                <div class="key"></div>
-                <div class="key">+</div>
+        <div class="display">
+            <div class="line1"></div>
+            <div class="stack">
+
             </div>
         </div>
+        <div class="info">
+            <span id="function">F1</span>
+        </div>
+        <div class="keyboard">
+            <table>
+                <tr class="functions">
+                    <td>
+                        <table>
+                            <tr>
+                                <td>.</td>
+                                <td>.</td>
+                                <td>.</td>
+                                <td>.</td>
+                                <td>.</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table class="keys">
+                            <tr>
+                                <td>.</td>
+                                <td>.</td>
+                                <td>.</td>
+                                <td>.</td>
+                                <td>.</td>
+                            </tr>
+                            <tr>
+                                <td>.</td>
+                                <td>.</td>
+                                <td>.</td>
+                                <td>.</td>
+                                <td>.</td>
+                            </tr>
+                            <tr>
+                                <td>.</td>
+                                <td>.</td>
+                                <td>.</td>
+                                <td>.</td>
+                                <td>.</td>
+                            </tr>
+                            <tr>
+                                <td keys="s" data-rpn="sum">&sum;</td>
+                                <td keys="alt+s" data-rpn="sumk">&sum;
+                                    <sub>k</sub>
+                                </td>
+                                <td></td>
+                                <td>.</td>
+                                <td>.</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table class="keys">
+                            <tr>
+                                <td keys="alt+%" data-rpn="perc">&Delta;&percnt;</td>
+                                <td keys="%" data-rpn="%">&percnt;</td>
+                                <td keys="/" data-rpn="/">&divide;</td>
+                                <td keys="*" data-rpn="*">&times;</td>
+                                <td keys="-" data-rpn="-">&minus;</td>
+                            </tr>
+                            <tr>
+                                <td keys="alt+-" data-rpn="+-">&PlusMinus;</td>
+                                <td keys="7" data-rpn="7" data-type="value">7</td>
+                                <td keys="8" data-rpn="8" data-type="value">8</td>
+                                <td keys="9" data-rpn="9" data-type="value">9</td>
+                                <td keys="+" data-rpn="+" rowspan="2">&plus;</td>
+                            </tr>
+                            <tr>
+                                <td keys="m" data-rpn="mod">Mod</td>
+                                <td keys="4" data-rpn="4" data-type="value">4</td>
+                                <td keys="5" data-rpn="5" data-type="value">5</td>
+                                <td keys="6" data-rpn="6" data-type="value">6</td>
+                            </tr>
+                            <tr>
+                                <td keys="delete" data-rpn="pop">Del</td>
+                                <td keys="1" data-rpn="1" data-type="value">1</td>
+                                <td keys="2" data-rpn="2" data-type="value">2</td>
+                                <td keys="3" data-rpn="3" data-type="value">3</td>
+                                <td keys="enter" data-rpn="enter" rowspan="2" class="font-2x">&hookleftarrow;</td>
+                            </tr>
+                            <tr>
+                                <td keys="escape" data-rpn="clr">Clr</td>
+                                <td keys="0" data-rpn="0" data-type="value">0</td>
+                                <td keys="x" data-rpn="E">E</td>
+                                <td keys=". ," data-rpn=".">.</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
+    <script>
+        $(document).ready(() => {
+            var stack = [];
+            var val = "";
+            var rpn = "";
+
+            $(document).on('keydown', null, (ev) => {
+                ev.stopPropagation = true;
+                var ctrl = ev.ctrlKey ? 'ctrl+' : '';
+                var alt = ev.altKey ? 'alt+' : '';
+                var key = $(`td[keys~='${ctrl}${alt}${ev.key.toString().toLowerCase()}']`);
+
+                key.click();
+            })
+            $("table.keys td").click((ev) => {
+                var $target = $(ev.target);
+                var rpn = $target.data("rpn");
+                if (rpn == null)
+                    return;
+
+                var isVal = $target.data("type") && $target.data("type") == "value";
+                if (isVal) {
+                    AddVal(rpn);
+                } else if (rpn == ".") {
+                    if (!val.endsWith(".")) {
+                        AddVal(rpn);
+                    }
+                } else if (rpn == "%") {
+                    AddVal(rpn);
+                    AddStack();
+                    Evaluate();
+                } else if (rpn == "-" && val == '') {
+                    AddVal(rpn);
+                } else if (rpn == "+-" && val != '') {
+                    val = val * -1;
+                    $('.line1').text(val);
+                } else if (rpn == "enter") {
+                    AddStack();
+                } else {
+                    if (val != '') {
+                        AddStack();
+                    }
+                    stack.push(rpn);
+                    Evaluate();
+                }
+            });
+
+            function AddStack() {
+                if (val == '')
+                    return;
+                stack.push(val);
+                AddIntoDisplay(val);
+                val = '';
+            }
+
+            function AddIntoDisplay(value) {
+                let $div = $(`<div>${value}</div>`);
+                $div.prependTo($('.stack'));
+                $('.line1').text('');
+            }
+
+            function AddVal(value) {
+                val += value;
+                $('.line1').text(val);
+            }
+
+            function Evaluate() {
+                stack = RPN.Single(stack.join(' '));
+                $('.stack').text('');
+
+                stack.forEach(element => {
+                    AddIntoDisplay(element);
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>
