@@ -9,21 +9,22 @@ class RPN {
                 "lcase", "strfmt", "sum", "sumk", "sin", "cos", "tan", "acos", "asin", "atan", "sinh", "cosh", "tanh",
                 "atan2", "ceiling", "ceil", "floor", "truncate", "trunc", "sqrt", "todate", "fromindex",
                 "&gt;", "&lt;", "&amp;", "&amp;&amp;", "&lt;&gt;", "&lt;=", "&gt;=", "stringify", "parse", "data", "date", "perc",
-                "E", "10x", "+-", "-+"
+                "E", "10x", "+-", "-+", "dpush", "dpop", "dclr", "stack", "data", "swap"
             ];
         }
     }
 
-    static Single(rpn) {
+    static Stack(rpn) {
         return this.Eval(rpn, null, true);
     }
-    static Eval(rpn, objects, singleOperation) {
+    static Eval(rpn, objects, returnStack) {
         this.Init();
 
         let data = objects ? objects : [];
         let split = rpn.split(' ');
         let stack = [];
         let blocks = {};
+        let returnObj;
 
         for (let i = 0; i < split.length; i++) {
             let s = split[i];
@@ -205,13 +206,14 @@ class RPN {
                         }
                     case "ret":
                         {
-                            return stack.pop();
+                            returnObj = stack.pop();
+                            break;
                         }
                     case "retif":
                         {
                             let cond = stack.pop();
                             if (cond)
-                                return stack.pop();
+                                returnObj = stack.pop();
                             break;
                         }
                     case "pi":
@@ -231,13 +233,13 @@ class RPN {
                             let x = stack.pop();
                             let y = stack.pop();
                             stack.push(Math.pow(y, x));
+                            break;
                         }
-                        break;
                     case "sqrt":
                         {
                             stack.push(Math.sqrt(stack.pop()));
+                            break;
                         }
-                        break;
                     case "todate":
                         {
                             let format = stack.pop();
@@ -254,8 +256,8 @@ class RPN {
                             let ss = (dt.getSeconds()).toString().padStart(2, '0');
 
                             stack.push(newFormat.replace("yyyy", yyyy).replace("MM", MM).replace("dd", dd).replace("HH", HH).replace("mm", mm).replace("ss", ss));
+                            break;
                         }
-                        break;
                     case "date":
                         {
                             let len = stack.pop();
@@ -268,15 +270,15 @@ class RPN {
                             let date = new Date(...parts);
 
                             stack.push(date);
+                            break;
                         }
-                        break;
                     case "perc":
                         {
                             var a = stack.pop();
                             var b = stack.pop();
                             stack.push(Math.round(100 * a / b));
+                            break;
                         }
-                        break;
                     case "fromindex":
                         {
                             let index = stack.pop();
@@ -286,8 +288,8 @@ class RPN {
                                 arr.push(stack.pop());
 
                             stack.push(arr[index]);
+                            break;
                         }
-                        break;
                     case "log":
                         stack.push(Math.log(stack.pop()));
                         break;
@@ -299,8 +301,8 @@ class RPN {
                             let x = Math.pow(10, stack.pop());
                             let y = stack.pop();
                             stack.push(Math.round(y * x) / x);
+                            break;
                         }
-                        break;
                     case "exp":
                         stack.push(Math.exp(stack.pop()));
                         break;
@@ -313,13 +315,13 @@ class RPN {
                             let x = stack.pop();
                             let y = stack.pop();
                             stack.push(Math.log(y) / Math.log(x));
+                            break;
                         }
-                        break;
                     case "log10":
                         {
                             stack.push(Math.log10(stack.pop()));
+                            break;
                         }
-                        break;
                     case "sum":
                         {
                             let sum = 0;
@@ -328,8 +330,8 @@ class RPN {
                                 sum += val;
                             }
                             stack.push(sum);
+                            break;
                         }
-                        break;
                     case "sumk":
                         {
                             let sum = 0;
@@ -339,77 +341,77 @@ class RPN {
                                 sum += val;
                             }
                             stack.push(sum);
+                            break;
                         }
-                        break;
                     case "sin":
                         {
                             stack.push(Math.sin(stack.pop()));
+                            break;
                         }
-                        break;
                     case "cos":
                         {
                             stack.push(Math.cos(stack.pop()));
+                            break;
                         }
-                        break;
                     case "tan":
                         {
                             stack.push(Math.tan(stack.pop()));
+                            break;
                         }
-                        break;
                     case "asin":
                         {
                             stack.push(Math.asin(stack.pop()));
+                            break;
                         }
-                        break;
                     case "acos":
                         {
                             stack.push(Math.acos(stack.pop()));
+                            break;
                         }
-                        break;
                     case "atan":
                         {
                             stack.push(Math.atan(stack.pop()));
+                            break;
                         }
-                        break;
                     case "atan2":
                         {
                             let x = stack.pop();
                             let y = stack.pop();
                             stack.push(Math.atan2(y, x));
+                            break;
                         }
-                        break;
                     case "sinh":
                         {
                             stack.push(Math.sinh(stack.pop()));
+                            break;
                         }
-                        break;
                     case "cosh":
                         {
                             stack.push(Math.cosh(stack.pop()));
+                            break;
                         }
-                        break;
                     case "tanh":
                         {
                             stack.push(Math.tanh(stack.pop()));
+                            break;
                         }
-                        break;
                     case "ceil":
                     case "ceiling":
                         {
                             stack.push(Math.ceil(stack.pop()));
+                            break;
                         }
-                        break;
                     case "trunc":
                     case "truncate":
                         {
                             stack.push(Math.trunc(stack.pop()));
+                            break;
                         }
-                        break;
                     case "floor":
                         {
                             stack.push(Math.floor(stack.pop()));
+                            break;
                         }
-                        break;
                     case "if":
                         {
                             let value = stack.pop();
@@ -452,6 +454,29 @@ class RPN {
                     case "stringify":
                         stack.push(JSON.stringify(stack.pop()));
                         break;
+                    case "dpush":
+                        data.push(stack.pop());
+                        break;
+                    case "dpop":
+                        stack.push(data.pop());
+                        break;
+                    case "dclr":
+                        data = [];
+                        break;
+                    case "data":
+                        stack.push(JSON.stringify(data));
+                        break;
+                    case "swap":
+                        {
+                            let x = stack.pop();
+                            let y = stack.pop();
+                            stack.push(x);
+                            stack.push(y);
+                            break;
+                        }
+                    case "stack":
+                        returnObj = JSON.stringify(stack);
+                        break;
                     case "parse":
                         data.push(JSON.parse(stack.pop()));
                         break;
@@ -478,8 +503,12 @@ class RPN {
                         }
                         break;
                 }
-                if (singleOperation) {
-                    return stack;
+                if (returnObj) {
+                    if (returnStack) {
+                        return stack;
+                    } else {
+                        return returnObj;
+                    }
                 }
             } else if (s.startsWith("@(")) {
                 let str = [];
@@ -571,7 +600,7 @@ class RPN {
                 stack.push(s);
             }
         }
-        if (singleOperation) {
+        if (returnStack) {
             return stack;
         }
 

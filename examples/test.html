@@ -179,6 +179,11 @@
             RPN.Test("Modulus", "11 3 %", 2);
             RPN.Test("Powers of 10", "3 3 E", 3000);
             RPN.Test("Sign Change", "5 +-", -5);
+            RPN.Test("dpush/dpop", "5 dpush 3 dpop", 5);
+            RPN.Test("data", "10 20 5 dpush 3 dpush data", '[5,3]');
+            RPN.Test("data clear", "10 20 5 dpush 3 dpush dclr data", '[]');
+            RPN.Test("stack", "5 2 3 stack", "[5,2,3]");
+            RPN.Test("swap", "1 5 swap stack", '[5,1]');
         }
         Run();
     </script>
