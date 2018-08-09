@@ -12,13 +12,20 @@
 <body>
     <div class="calculator">
         <div class="display">
+            <div class="vars">
+                <div>:x</div>
+                <div>:y</div>
+                <div>:z</div>
+                <div>:k</div>
+            </div>
             <div class="line1"></div>
             <div class="stack">
 
             </div>
         </div>
         <div class="info">
-            <span id="f2nd">2nd</span>
+            <span id="fctrl">ctrl</span>
+            <span id="falt">alt</span>
         </div>
         <div class="keyboard">
             <table>
@@ -53,23 +60,20 @@
                                 <td>.</td>
                             </tr>
                             <tr>
-                                <td>.</td>
-                                <td>.</td>
-                                <td>.</td>
+                                <td data-rpn="sin">Sin</td>
+                                <td data-rpn="cos">Cos</td>
+                                <td data-rpn="tan">Tan</td>
                                 <td>.</td>
                                 <td>.</td>
                             </tr>
                             <tr>
                                 <td keys="s" data-rpn="sum">&sum;
-                                    <span class="ctrl" data-rpn="sumk" keys="ctrl+s">&sum;
-                                        <sub>k</sub>
-                                    </span>
+                                    <span class="alt" data-rpn="sumk" keys="alt+s">&sum;x</span>
                                 </td>
-                                <td>.
-                                </td>
-                                <td></td>
-                                <td>.</td>
-                                <td>.</td>
+                                <td data-rpn="1 swap / pow" data-type="exp">x&Sqrt;y</td>
+                                <td data-rpn="pi">&Pi;</td>
+                                <td data-rpn="swap">Swap</td>
+                                <td keys="backspace" data-rpn="backspace">&DoubleLongLeftArrow;</td>
                             </tr>
                         </table>
                     </td>
@@ -78,40 +82,43 @@
                     <td>
                         <table class="keys">
                             <tr>
-                                <td>.</td>
+                                <td data-rpn="sqrt">&Sqrt;x</td>
                                 <td keys="%" data-rpn="%">&percnt;
-                                    <span class="ctrl" keys="ctrl+%" data-rpn="perc">&Delta;&percnt;</span>
+                                    <span class="alt" keys="alt+%" data-rpn="perc">&Delta;&percnt;</span>
                                 </td>
                                 <td keys="/" data-rpn="/">&divide;
-                                    <span class="ctrl" keys="ctrl+/" data-rpn="mod">Mod</span>
+                                    <span class="alt" keys="alt+/" data-rpn="mod">Mod</span>
                                 </td>
                                 <td keys="*" data-rpn="*">&times;</td>
                                 <td keys="-" data-rpn="-">&minus;
-                                    <span class="ctrl" keys="ctrl+-" data-rpn="+-">&PlusMinus;</span>
+                                    <span class="alt" keys="alt+-" data-rpn="+-">&PlusMinus;</span>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="control-key">&UpTeeArrow;</td>
+                                <td data-rpn="2 pow">x²</td>
                                 <td keys="7" data-rpn="7" data-type="value">7</td>
                                 <td keys="8" data-rpn="8" data-type="value">8</td>
                                 <td keys="9" data-rpn="9" data-type="value">9</td>
                                 <td keys="+" data-rpn="+" rowspan="2">&plus;</td>
                             </tr>
                             <tr>
-                                <td>.</td>
+                                <td id="control-key">Control</td>
                                 <td keys="4" data-rpn="4" data-type="value">4</td>
                                 <td keys="5" data-rpn="5" data-type="value">5</td>
                                 <td keys="6" data-rpn="6" data-type="value">6</td>
                             </tr>
                             <tr>
-                                <td keys="delete" data-rpn="pop">Del</td>
-                                <td keys="1" data-rpn="1" data-type="value">1</td>
+                                <td id="alt-key">Alt</td>
+                                <td keys="1" data-rpn="1" data-type="value">1
+                                    <span class="alt" keys="alt+1" data-type="exp" data-rpn="1 swap /">1/x</span>
+                                </td>
                                 <td keys="2" data-rpn="2" data-type="value">2</td>
                                 <td keys="3" data-rpn="3" data-type="value">3</td>
-                                <td keys="enter" data-rpn="enter" rowspan="2" class="font-2x">&hookleftarrow;</td>
+                                <td keys="enter" data-rpn="enter" rowspan="2">ENTER</td>
                             </tr>
                             <tr>
                                 <td keys="delete" data-rpn="pop">Del
+                                    <span class="alt" keys="alt+delete escape" data-rpn="clr">Clr</span>
                                     <span class="ctrl" keys="ctrl+delete escape" data-rpn="clr">Clr</span>
                                 </td>
                                 <td keys="0" data-rpn="0" data-type="value">0</td>
@@ -131,32 +138,57 @@
             var rpn = "";
 
             $(document).on('keyup', null, (ev) => {
-                if (ev.key == "Control") {
-                    ControlKey(false);
+                switch (ev.key) {
+                    case "Control":
+                        ControlKey(false);
+                        break;
+                    case "Alt":
+                        AltKey(false);
+                        break;
                 }
             })
 
             $(document).on('keydown', null, (ev) => {
-
                 if (ev.key == "Control" || ev.ctrlKey) {
+                    ControlKey(true);
+                } else if (ev.key == "Alt" || ev.altKey) {
+                    AltKey(true);
+                }
+                var ctrl = ev.ctrlKey ? 'ctrl+' : '';
+                var alt = ev.altKey ? 'alt+' : '';
+                var key = $(`*[keys~='${ctrl}${alt}${ev.key.toString().toLowerCase()}']`);
+
+                if (((ctrl || alt) && key.length) || ev.key == "Alt" || ev.key == "Control") {
+                    console.log('stop')
                     ev.stopPropagation();
                     ev.stopImmediatePropagation();
                     ev.preventDefault();
-
-                    ControlKey(true);
                 }
-                var ctrl = ev.ctrlKey ? 'ctrl+' : '';
-                var key = $(`*[keys~='${ctrl}${ev.key.toString().toLowerCase()}']`);
-
                 key.click();
             })
             $("table.keys td").click((ev) => {
-                var $target = $(ev.target);
+                let $calculator = $('.calculator');
+                let $target = $(ev.target);
+
+                if ($calculator.hasClass('ctrl')) {
+                    $target = $target.find('.ctrl');
+                    if (!$target.length)
+                        $target = $(ev.target);
+                }
+
+                if ($calculator.hasClass('alt')) {
+                    $target = $target.find('.alt');
+                    if (!$target.length)
+                        $target = $(ev.target);
+                }
+
                 var rpn = $target.data("rpn");
                 if (rpn == null)
                     return;
 
-                var isVal = $target.data("type") && $target.data("type") == "value";
+                let type = $target.data("type");
+                var isVal = type && type == "value";
+
                 if (isVal) {
                     AddVal(rpn);
                 } else if (rpn == ".") {
@@ -172,6 +204,11 @@
                 } else if (rpn == "+-" && val != '') {
                     val = val * -1;
                     $('.line1').text(val);
+                } else if (type == "exp") {
+                    if (val != '')
+                        AddStack();
+                    stack = stack.concat(rpn.split(' '));
+                    Evaluate();
                 } else if (rpn == "enter") {
                     if (val == "-") {
                         AddStack();
@@ -179,6 +216,9 @@
                     } else {
                         AddStack();
                     }
+                } else if (rpn == "backspace") {
+                    val = val.slice(0, -1);
+                    $('.line1').text(val);
                 } else {
                     if (val != '') {
                         AddStack();
@@ -189,11 +229,14 @@
             });
 
             function AddStack() {
-                if (val == '')
-                    return;
+                if (val == '' && stack.length > 0) {
+                    val = stack.slice(-1).pop();
+                }
                 stack.push(val);
                 AddIntoDisplay(val);
                 val = '';
+
+                $('.calculator').removeClass('ctrl alt');
             }
 
             function AddIntoDisplay(value) {
@@ -208,21 +251,47 @@
             }
 
             function Evaluate() {
-                stack = RPN.Single(stack.join(' '));
+                stack = RPN.Stack(stack.join(' '));
                 $('.stack').text('');
 
                 stack.forEach(element => {
                     AddIntoDisplay(element);
                 });
+
+                $('.calculator').removeClass('ctrl alt');
             }
+
+            $('#control-key').click(() => {
+                let $key = $('#control-key');
+                $key.toggleClass("pressed");
+
+                let $calculator = $('.calculator');
+                $calculator.toggleClass('ctrl');
+                $calculator.removeClass('alt');
+            });
 
             function ControlKey(pressed) {
                 if (pressed) {
-                    $('#function').text('2nd');
                     $('.calculator').addClass("ctrl");
                 } else {
-                    $('#function').text('normal');
                     $('.calculator').removeClass("ctrl");
+                }
+            }
+
+            $('#alt-key').click(() => {
+                let $key = $('#alt-key');
+                $key.toggleClass("pressed");
+
+                let $calculator = $('.calculator');
+                $calculator.toggleClass('alt');
+                $calculator.removeClass('ctrl');
+            });
+
+            function AltKey(pressed) {
+                if (pressed) {
+                    $('.calculator').addClass("alt");
+                } else {
+                    $('.calculator').removeClass("alt");
                 }
             }
         });
