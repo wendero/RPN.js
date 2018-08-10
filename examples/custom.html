@@ -58,6 +58,9 @@
             <button id="eval" onclick="Evaluate()">
                 Evaluate RPN
             </button>
+            <button id="single" onclick="Single()">
+                Single Step
+            </button>
         </div>
         <label for="objects">Objects (JSON array)</label>
         <div id="objects" class="editor" contenteditable="true">
@@ -105,6 +108,27 @@
                 objects = objects ? objects : null;
                 var rpn = RPN.Eval(div, objects);
                 document.getElementById('results').innerText = rpn;
+            } catch (e) {
+                console.log(e);
+                document.getElementById('results').innerText = 'RPN cannot be evaluated';
+                return false;
+            }
+        }
+        function Single() {
+            var rpnObj = document.getElementById('rpn');
+            var div = rpnObj.innerText;
+            if (!div) {
+                document.getElementById('message').innerText = '';
+                return false;
+            }
+            try {
+                var objects = ValidateJson();
+                objects = objects ? objects : null;
+                var rpn = RPN.Stack(div, objects);
+                
+                rpnObj.focus();
+                var rpnJoin = rpn.join(' ');
+                rpnObj.innerText = rpnJoin;
             } catch (e) {
                 console.log(e);
                 document.getElementById('results').innerText = 'RPN cannot be evaluated';

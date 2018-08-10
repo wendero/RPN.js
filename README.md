@@ -15,9 +15,9 @@ Full Evaluation function is able to process a full expression at once and return
 <code>true</code>
 
 ### Single Evaluation
-Single Evaluation will process just the latest operation and return the resultant stack:
+Single Evaluation will process just the latest operation and return the resultant stack with all values (not operations):
 
-<code>console.log(RPN.Single("5 5 2 *"));</code>
+<code>console.log(RPN.Stack("5 5 2 *"));</code>
 
 *Output:*
 
@@ -49,9 +49,10 @@ Single Evaluation will process just the latest operation and return the resultan
 | Square root | sqrt | Square root of a | 25 sqrt | 5 |
 | Sum | sum | Sums the entire stack | 1 2 3 5 8 13 21 sum | 53 |
 | Sum k | sumk | Sums k items in stack | 1 2 3 5 8 13 21 3 sumk | 42 |
-| Log<sub>2</sub> | log | Binary log of a | 8 log | 3 |
+| Log<sub>2</sub> | log2 | Binary log of a | 8 log2 | 3 |
 | Log<sub>b</sub> | logb | Log of a at base b | 8 2 logb | 3 |
 | Log<sub>10</sub> | log10 | Log of a at base 10 | pi log10 | 0.497149872694134 |
+| Natural Log | ln | Natural log of a | 1 exp ln | 1 |
 | Euler exp | exp | Euler's exp | pi exp | 23.1406926327793 |
 
 ## Trigonometric Operations
@@ -114,6 +115,11 @@ Date Format | todate | Convert a date object into a specific string format: <br>
 | Pop | pop | Discards the top stack item | 3 5 pop | 3 |
 | Pop X | popx | Discard the *k* index item from stack (0...n) | 1 2 4 8 50 16 32 64 3 popx sum | Discards the item indexed 3 (50) and sum all others &rarr; 127 |
 | Clear | clr | Clear stack | 10 20 30 40 50 5 3 2 clr 1 | 1 |
+| Swap | swap | Swap past two stack entries | 10 20 swap | 10 |
+| Stack | stack | Return the stack JSON's | 5 2 3 stack | "[5,2,3]" |
+| Data Push | dpush | Insert value into data stack | 5 dpush data | "[5]" |
+| Data Pop | dpop | Get value from data stack | 5 dpush dpop | 5 |
+| Data Clear | dclr | Clear data stack | 5 dpush dclr data | "[]" |
 | Return | ret | Return the top value in stack before the operator | 10 20 30 40 50 5 3 20 ret 30 | 20 |
 | Return if | retif | Return the a if b | 10 true ret 20 | 10 |
 | Function | @\<label> | Creates a function that can be called later | @a 10 20 + @a | Function @a is stored |

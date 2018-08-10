@@ -26,8 +26,9 @@ div.calculator {
             color: white;
             font-size: 9px;
             font-weight: bold;
-            padding: 1px 2px 1px 2px;
             border-radius: 3px;
+            padding: 1px 5px 1px 5px;
+            opacity: 0.3;
         }
     }
     div.display {
@@ -39,6 +40,14 @@ div.calculator {
         font: 14px monospace;
         overflow: hidden;
         text-align: right;
+        
+        div.vars {
+            position: absolute;
+            top: 29px;
+            right: 2px;
+            color: gray;
+            margin-right: 0px;
+        }
 
         .line1 {
             font-weight: bold;
@@ -48,11 +57,15 @@ div.calculator {
             width: 100%;
             height: 24px;
         }
-
         
         div {
             clear: both;
             float: right;
+        }
+        div.stack {
+            div {
+                margin-right: 12px;
+            }
         }
     }
 
@@ -81,12 +94,87 @@ div.calculator {
             }
 
             &.keys td {
+                position: relative;
                 cursor: pointer;
+                font-size: 14px;
                 &:hover {
                     background-color: #111;
                 }
+                &#alt-key {
+                    background-color: mediumspringgreen;
+                    &:hover {
+                        background-color: lighten(mediumspringgreen, 20%);
+                    }
+                }
+                &#control-key {
+                    background-color: purple;
+                    &:hover {
+                        background-color: lighten(purple, 20%);
+                    }
+                }
             }
-
+            &.keys td span.alt {
+                display: inline-block;
+                position: absolute;
+                top: 1px;
+                right: 3px;
+            }
+            &.keys td span.ctrl {
+                display: inline-block;
+                position: absolute;
+                top: 1px;
+                left: 3px;
+            }
+        }
+    }
+    &.alt {
+        .keyboard td:not(#ctrl-key #alt-key)
+        {
+            color: rgba(255, 255, 255, 0.1);
+        }
+        .keyboard td#alt-key
+        {
+            background-color: darken(mediumspringgreen, 10%) !important;
+        }
+        span.alt {
+            font-size: 0.8em;
+            opacity: 1;
+            color: mediumspringgreen;
+        }
+        div.info span#falt {
+            opacity: 1;
+        }
+    }
+    &.ctrl {
+        .keyboard td:not(#ctrl-key #alt-key)
+        {
+            color: rgba(255, 255, 255, 0.1);
+        }
+        .keyboard td#control-key
+        {
+            background-color: darken(purple, 10%) !important;
+        }
+        span.ctrl {
+            font-size: 0.8em;
+            opacity: 1;
+            color: magenta;
+        }
+        div.info span#fctrl {
+            opacity: 1;
+        }
+    }
+    &:not(.alt) {
+        span.alt {
+            font-size: 0.8em;
+            opacity: 0.3;
+            color: mediumspringgreen;
+        }
+    }
+    &:not(.ctrl) {
+        span.ctrl {
+            font-size: 0.8em;
+            opacity: 0.5;
+            color: magenta;
         }
     }
 }
