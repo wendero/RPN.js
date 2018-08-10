@@ -5,7 +5,7 @@ class RPN {
             this.OPERATORS = [
                 "+", "-", "*", "/", ">", "<", "=", "==", "!=", "<>", ">=", "<=", "++", "--", "+=", "-=",
                 "pop", "popx", "min", "max", "clr", "not", "!", "ret", "retif", "&", "&&", "and", "|", "||", "or", "if", "ife",
-                "case", "end", "pi", "%", "mod", "^", "pow", "log", "round", "exp", "logb", "log10", "abs", "ucase",
+                "case", "end", "pi", "%", "mod", "^", "pow", "log", "round", "exp", "logb", "log2", "log10", "abs", "ucase",
                 "lcase", "strfmt", "sum", "sumk", "sin", "cos", "tan", "acos", "asin", "atan", "sinh", "cosh", "tanh",
                 "atan2", "ceiling", "ceil", "floor", "truncate", "trunc", "sqrt", "todate", "fromindex",
                 "&gt;", "&lt;", "&amp;", "&amp;&amp;", "&lt;&gt;", "&lt;=", "&gt;=", "stringify", "parse", "data", "date", "perc",
@@ -290,8 +290,12 @@ class RPN {
                             stack.push(arr[index]);
                             break;
                         }
+                    case "ln":
                     case "log":
                         stack.push(Math.log(stack.pop()));
+                        break;
+                    case "log2":
+                        stack.push(Math.log2(stack.pop()));
                         break;
                     case "abs":
                         stack.push(Math.abs(stack.pop()));

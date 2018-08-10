@@ -49,9 +49,10 @@ Single Evaluation will process just the latest operation and return the resultan
 | Square root | sqrt | Square root of a | 25 sqrt | 5 |
 | Sum | sum | Sums the entire stack | 1 2 3 5 8 13 21 sum | 53 |
 | Sum k | sumk | Sums k items in stack | 1 2 3 5 8 13 21 3 sumk | 42 |
-| Log<sub>2</sub> | log | Binary log of a | 8 log | 3 |
+| Log<sub>2</sub> | log2 | Binary log of a | 8 log2 | 3 |
 | Log<sub>b</sub> | logb | Log of a at base b | 8 2 logb | 3 |
 | Log<sub>10</sub> | log10 | Log of a at base 10 | pi log10 | 0.497149872694134 |
+| Natural Log | ln | Natural log of a | 1 exp ln | 1 |
 | Euler exp | exp | Euler's exp | pi exp | 23.1406926327793 |
 
 ## Trigonometric Operations
