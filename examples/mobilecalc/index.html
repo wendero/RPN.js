@@ -20,21 +20,305 @@
             </div>
             <div class="line1"></div>
             <div class="stack">
-                    <div>1</div>
-                    <div>1</div>
-                    <div>1</div>
-                    <div>1</div>
-                    <div>1</div>
-                    <div>1</div>
-                    <div>1</div>
-                    <div>1</div>
-                </div>
+            </div>
         </div>
         <div class="info">
             <span id="fctrl">ctrl</span>
             <span id="falt">alt</span>
         </div>
+        <div class="keyboard">
+            <table>
+                <!-- <tr class="functions">
+                    <td>
+                        <table>
+                            <tr>
+                                <td>.</td>
+                                <td>.</td>
+                                <td>.</td>
+                                <td>.</td>
+                                <td>.</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr> -->
+                <tr>
+                    <td>
+                        <table class="keys">
+                            <tr>
+                                <td data-rpn="log10 10 *" data-type="exp">dB
+                                    <span class="alt" data-rpn="10 / 10 swap pow" data-type="exp">Lin</span>
+                                </td>
+                                <td data-rpn="10 / 10 swap pow 1000 /" data-type="exp">dBm&rightarrow;W
+                                    <span class="alt" data-rpn="1000 * log10 10 *" data-type="exp">W&rightarrow;dBm</span>
+                                </td>
+                                <td data-rpn="logb">logb</td>
+                                <td data-rpn="log10">log10
+                                    <span class="alt" data-rpn="log2">log2</span>
+                                </td>
+                                <td data-rpn="ln" data-type="exp">ln
+                                    <span class="alt" data-rpn="exp">exp</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td data-rpn="sin">Sin
+                                    <span class="alt" data-rpn="asin">ASin</span>
+                                    <span class="ctrl" data-rpn="sinh">Sinh</span>
+                                </td>
+                                <td data-rpn="cos">Cos
+                                    <span class="alt" data-rpn="acos">ACos</span>
+                                    <span class="ctrl" data-rpn="cosh">Cosh</span>
+                                </td>
+                                <td data-rpn="tan">Tan
+                                    <span class="alt" data-rpn="atan">ATan</span>
+                                    <span class="ctrl" data-rpn="tanh">Tanh</span>
+                                </td>
+                                <td data-rpn="pi">&Pi;
+                                    <span class="alt" data-rpn="pi / 180 * 360 %" data-type="exp">Deg</span>
+                                    <span class="ctrl" data-rpn="360 % 180 / pi *" data-type="exp">Rad</span>
+                                </td>
+                                <td data-rpn="round">Round
+                                    <span class="alt" data-rpn="trunc">Trunc</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td keys="s" data-rpn="sum">&sum;
+                                    <span class="alt" data-rpn="sumk" keys="alt+s">&sum;x</span>
+                                </td>
+                                <td data-rpn="1 swap / pow" data-type="exp">x&Sqrt;y</td>
+                                <td data-rpn="pow">y
+                                    <sup>x</sup>
+                                    <span class="alt" data-type="exp" data-rpn="10 swap pow">10
+                                        <sup>x</sup>
+                                    </span>
+                                </td>
+                                <td data-rpn="swap">Swap</td>
+                                <td keys="backspace" data-rpn="backspace">&DoubleLongLeftArrow;</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table class="keys">
+                            <tr>
+                                <td data-rpn="sqrt">&Sqrt;x</td>
+                                <td keys="%" data-rpn="%">&percnt;
+                                    <span class="alt" keys="alt+%" data-rpn="perc">&Delta;&percnt;</span>
+                                </td>
+                                <td keys="/" data-rpn="/">&divide;
+                                    <span class="alt" keys="alt+/" data-rpn="mod">Mod</span>
+                                </td>
+                                <td keys="*" data-rpn="*">&times;</td>
+                                <td keys="-" data-rpn="-">&minus;
+                                    <span class="alt" keys="alt+-" data-rpn="+-">&PlusMinus;</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td data-rpn="2 pow">x²</td>
+                                <td keys="7" data-rpn="7" data-type="value">7</td>
+                                <td keys="8" data-rpn="8" data-type="value">8</td>
+                                <td keys="9" data-rpn="9" data-type="value">9</td>
+                                <td keys="+" data-rpn="+" rowspan="2">&plus;</td>
+                            </tr>
+                            <tr>
+                                <td id="control-key">Control</td>
+                                <td keys="4" data-rpn="4" data-type="value">4</td>
+                                <td keys="5" data-rpn="5" data-type="value">5</td>
+                                <td keys="6" data-rpn="6" data-type="value">6</td>
+                            </tr>
+                            <tr>
+                                <td id="alt-key">Alt</td>
+                                <td keys="1" data-rpn="1" data-type="value">1
+                                    <span class="alt" keys="alt+1" data-type="exp" data-rpn="1 swap /">1/x</span>
+                                </td>
+                                <td keys="2" data-rpn="2" data-type="value">2</td>
+                                <td keys="3" data-rpn="3" data-type="value">3</td>
+                                <td keys="enter" data-rpn="enter" rowspan="2">ENTER</td>
+                            </tr>
+                            <tr>
+                                <td keys="delete" data-rpn="pop">Del
+                                    <span class="alt" keys="alt+delete escape" data-rpn="clr">Clr</span>
+                                    <span class="ctrl" keys="ctrl+delete escape" data-rpn="clr">Clr</span>
+                                </td>
+                                <td keys="0" data-rpn="0" data-type="value">0</td>
+                                <td keys="x" data-rpn="E">E</td>
+                                <td keys=". ," data-rpn=".">.</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
+    <script>
+        $(document).ready(() => {
+            var stack = [];
+            var val = "";
+            var rpn = "";
+
+            $(document).on('keyup', null, (ev) => {
+                switch (ev.key) {
+                    case "Control":
+                        ControlKey(false);
+                        break;
+                    case "Alt":
+                        AltKey(false);
+                        break;
+                }
+            })
+
+            $(document).on('keydown', null, (ev) => {
+                if (ev.key == "Control" || ev.ctrlKey) {
+                    ControlKey(true);
+                } else if (ev.key == "Alt" || ev.altKey) {
+                    AltKey(true);
+                }
+                var ctrl = ev.ctrlKey ? 'ctrl+' : '';
+                var alt = ev.altKey ? 'alt+' : '';
+                var key = $(`*[keys~='${ctrl}${alt}${ev.key.toString().toLowerCase()}']`);
+
+                if (((ctrl || alt) && key.length) || ev.key == "Alt" || ev.key == "Control") {
+                    console.log('stop')
+                    ev.stopPropagation();
+                    ev.stopImmediatePropagation();
+                    ev.preventDefault();
+                }
+                key.click();
+            })
+            $("table.keys td").click((ev) => {
+                let $calculator = $('.calculator');
+                let $target = $(ev.target);
+
+                if ($calculator.hasClass('ctrl')) {
+                    $target = $target.find('.ctrl');
+                    if (!$target.length)
+                        $target = $(ev.target);
+                }
+
+                if ($calculator.hasClass('alt')) {
+                    $target = $target.find('.alt');
+                    if (!$target.length)
+                        $target = $(ev.target);
+                }
+
+                var rpn = $target.data("rpn");
+                if (rpn == null)
+                    return;
+
+                let type = $target.data("type");
+                var isVal = type && type == "value";
+
+                if (isVal) {
+                    AddVal(rpn);
+                } else if (rpn == ".") {
+                    if (!val.endsWith(".")) {
+                        AddVal(rpn);
+                    }
+                } else if (rpn == "%") {
+                    AddVal(rpn);
+                    AddStack();
+                    Evaluate();
+                } else if (rpn == "-" && val == '') {
+                    AddVal(rpn);
+                } else if (rpn == "+-" && val != '') {
+                    val = val * -1;
+                    $('.line1').text(val);
+                } else if (type == "exp") {
+                    if (val != '')
+                        AddStack();
+                    stack = stack.concat(rpn.split(' '));
+                    Evaluate();
+                } else if (rpn == "enter") {
+                    if (val == "-") {
+                        AddStack();
+                        Evaluate();
+                    } else {
+                        AddStack();
+                    }
+                } else if (rpn == "backspace") {
+                    val = val.slice(0, -1);
+                    $('.line1').text(val);
+                } else {
+                    if (val != '') {
+                        AddStack();
+                    }
+                    stack.push(rpn);
+                    Evaluate();
+                }
+            });
+
+            function AddStack() {
+                if (val == '') {
+                    if (stack.length > 0) {
+                        val = stack.slice(-1).pop();
+                    } else {
+                        return;
+                    }
+                }
+                stack.push(val);
+                AddIntoDisplay(val);
+                val = '';
+
+                $('.calculator').removeClass('ctrl alt');
+            }
+
+            function AddIntoDisplay(value) {
+                let $div = $(`<div>${value}</div>`);
+                $div.prependTo($('.stack'));
+                $('.line1').text('');
+            }
+
+            function AddVal(value) {
+                val += value;
+                $('.line1').text(val);
+            }
+
+            function Evaluate() {
+                stack = RPN.Stack(stack.join(' '));
+                $('.stack').text('');
+
+                stack.forEach(element => {
+                    AddIntoDisplay(element);
+                });
+
+                $('.calculator').removeClass('ctrl alt');
+            }
+
+            $('#control-key').click(() => {
+                let $key = $('#control-key');
+                $key.toggleClass("pressed");
+
+                let $calculator = $('.calculator');
+                $calculator.toggleClass('ctrl');
+                $calculator.removeClass('alt');
+            });
+
+            function ControlKey(pressed) {
+                if (pressed) {
+                    $('.calculator').addClass("ctrl");
+                } else {
+                    $('.calculator').removeClass("ctrl");
+                }
+            }
+
+            $('#alt-key').click(() => {
+                let $key = $('#alt-key');
+                $key.toggleClass("pressed");
+
+                let $calculator = $('.calculator');
+                $calculator.toggleClass('alt');
+                $calculator.removeClass('ctrl');
+            });
+
+            function AltKey(pressed) {
+                if (pressed) {
+                    $('.calculator').addClass("alt");
+                } else {
+                    $('.calculator').removeClass("alt");
+                }
+            }
+        });
+    </script>    
 </body>
 
 </html>
