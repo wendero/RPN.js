@@ -20,7 +20,6 @@
             </div>
             <div class="line1"></div>
             <div class="stack">
-
             </div>
         </div>
         <div class="info">
@@ -52,9 +51,14 @@
                                 <td data-rpn="10 / 10 swap pow 1000 /" data-type="exp">dBm&rightarrow;W
                                     <span class="alt" data-rpn="1000 * log10 10 *" data-type="exp">W&rightarrow;dBm</span>
                                 </td>
-                                <td data-rpn="logb">logb</td>
-                                <td data-rpn="log10">log10
-                                    <span class="alt" data-rpn="log2">log2</span>
+                                <td data-rpn="logb">log
+                                    <sub>b</sub>
+                                </td>
+                                <td data-rpn="log10">log
+                                    <sub>10</sub>
+                                    <span class="alt" data-rpn="log2">log
+                                        <sub>2</sub>
+                                    </span>
                                 </td>
                                 <td data-rpn="ln" data-type="exp">ln
                                     <span class="alt" data-rpn="exp">exp</span>
@@ -83,7 +87,9 @@
                             </tr>
                             <tr>
                                 <td keys="s" data-rpn="sum">&sum;
-                                    <span class="alt" data-rpn="sumk" keys="alt+s">&sum;x</span>
+                                    <span class="alt" data-rpn="sumk" keys="alt+s">&sum;
+                                        <sub>x</sub>
+                                    </span>
                                 </td>
                                 <td data-rpn="1 swap / pow" data-type="exp">x&Sqrt;y</td>
                                 <td data-rpn="pow">y
@@ -276,7 +282,6 @@
 
             function Evaluate() {
                 stack = RPN.Stack(stack.join(' '));
-                $('.stack').text('');
 
                 stack.forEach(element => {
                     AddIntoDisplay(element);
