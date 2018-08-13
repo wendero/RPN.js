@@ -17,6 +17,27 @@ sup, sub {
       max-width: 500px;
     }
     div.keyboard {
+        &>table {
+            &>tbody {
+                &>tr {
+                    td {                        
+                        table {
+                            tr {
+                                td {
+                                    &:hover{
+                                        cursor: pointer;
+                                        background-color: #222;
+                                    }
+                                    &.active {
+                                        background-color: #111;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         span {
             top: .05em !important;
             &.alt {
@@ -129,8 +150,7 @@ div.calculator {
                                     text-align: center;
                                     position: relative;
 
-                                    &:hover {
-                                        cursor: pointer;
+                                    &:active {
                                         background-color: #111;
                                     }
                                    

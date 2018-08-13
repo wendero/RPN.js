@@ -173,6 +173,11 @@
                         AltKey(false);
                         break;
                 }
+                var ctrl = ev.ctrlKey ? 'ctrl+' : '';
+                var alt = ev.altKey ? 'alt+' : '';
+                var key = $(`*[keys~='${ctrl}${alt}${ev.key.toString().toLowerCase()}']`);
+
+                key.removeClass('active');
             })
 
             $(document).on('keydown', null, (ev) => {
@@ -190,6 +195,7 @@
                     ev.stopImmediatePropagation();
                     ev.preventDefault();
                 }
+                key.addClass('active');
                 key.click();
             })
             $("table.keys td").click((ev) => {

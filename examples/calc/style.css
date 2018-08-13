@@ -14,6 +14,13 @@ sub {
   div.calculator {
     max-width: 500px;
   }
+  div.keyboard > table > tbody > tr td table tr td:hover {
+    cursor: pointer;
+    background-color: #222;
+  }
+  div.keyboard > table > tbody > tr td table tr td.active {
+    background-color: #111;
+  }
   div.keyboard span {
     top: .05em !important;
   }
@@ -113,8 +120,7 @@ div.calculator div.keyboard > table > tbody > tr td table tr td {
   text-align: center;
   position: relative;
 }
-div.calculator div.keyboard > table > tbody > tr td table tr td:hover {
-  cursor: pointer;
+div.calculator div.keyboard > table > tbody > tr td table tr td:active {
   background-color: #111;
 }
 div.calculator div.keyboard > table > tbody > tr td table tr td span {
