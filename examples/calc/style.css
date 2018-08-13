@@ -78,6 +78,7 @@ div.calculator div.display .stack {
   right: 1.5em;
   font-size: 3em;
   height: 4.8em;
+  line-height: 1.2em;
   overflow: hidden;
 }
 div.calculator div.info {
