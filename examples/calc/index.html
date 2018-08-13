@@ -185,7 +185,6 @@
                 var key = $(`*[keys~='${ctrl}${alt}${ev.key.toString().toLowerCase()}']`);
 
                 if (((ctrl || alt) && key.length) || ev.key == "Alt" || ev.key == "Control") {
-                    console.log('stop')
                     ev.stopPropagation();
                     ev.stopImmediatePropagation();
                     ev.preventDefault();
@@ -283,6 +282,7 @@
             function Evaluate() {
                 stack = RPN.Stack(stack.join(' '));
 
+                $('.stack').text('');
                 stack.forEach(element => {
                     AddIntoDisplay(element);
                 });
