@@ -227,11 +227,20 @@
                     if (!val.endsWith(".")) {
                         AddVal(rpn);
                     }
+                } else if (rpn == "E") {
+                    if(val == '')
+                    {
+                        AddVal("1E");
+                    }
+                    else if(val.split('E').length == 1)
+                    {
+                        AddVal("E");
+                    }
                 } else if (rpn == "%") {
                     AddVal(rpn);
                     AddStack();
                     Evaluate();
-                } else if (rpn == "-" && val == '') {
+                } else if (rpn == "-" && (val == '' || val.endsWith('E'))) {
                     AddVal(rpn);
                 } else if (rpn == "+-" && val != '') {
                     val = val * -1;
@@ -242,6 +251,12 @@
                     stack = stack.concat(rpn.split(' '));
                     Evaluate();
                 } else if (rpn == "enter") {
+                    if(val.split('E').length == 2)
+                    {
+                        let e = val.split('E');
+                        val = RPN.Eval(`${e[0]} ${e[1]} E`);
+                    }
+                    
                     if (val == "-") {
                         AddStack();
                         Evaluate();
