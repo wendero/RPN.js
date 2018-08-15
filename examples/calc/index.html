@@ -99,7 +99,9 @@
                                         <sup>x</sup>
                                     </span>
                                 </td>
-                                <td data-rpn="swap">Swap</td>
+                                <td data-rpn="swap">Swap
+                                    <span class="alt" data-rpn="rot">Rot</span>
+                                </td>
                                 <td keys="backspace" data-rpn="backspace">&DoubleLongLeftArrow;</td>
                             </tr>
                         </table>
@@ -228,12 +230,9 @@
                         AddVal(rpn);
                     }
                 } else if (rpn == "E") {
-                    if(val == '')
-                    {
+                    if (val == '') {
                         AddVal("1E");
-                    }
-                    else if(val.split('E').length == 1)
-                    {
+                    } else if (val.split('E').length == 1) {
                         AddVal("E");
                     }
                 } else if (rpn == "%") {
@@ -251,12 +250,11 @@
                     stack = stack.concat(rpn.split(' '));
                     Evaluate();
                 } else if (rpn == "enter") {
-                    if(val.split('E').length == 2)
-                    {
+                    if (val.split('E').length == 2) {
                         let e = val.split('E');
                         val = RPN.Eval(`${e[0]} ${e[1]} E`);
                     }
-                    
+
                     if (val == "-") {
                         AddStack();
                         Evaluate();

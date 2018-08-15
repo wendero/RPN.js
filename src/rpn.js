@@ -6,10 +6,10 @@ class RPN {
                 "+", "-", "*", "/", ">", "<", "=", "==", "!=", "<>", ">=", "<=", "++", "--", "+=", "-=",
                 "pop", "popx", "min", "max", "clr", "not", "!", "ret", "retif", "&", "&&", "and", "|", "||", "or", "if", "ife",
                 "case", "end", "pi", "%", "mod", "^", "pow", "log", "round", "exp", "logb", "log2", "log10", "abs", "ucase",
-                "lcase", "strfmt", "sum", "sumk", "sin", "cos", "tan", "acos", "asin", "atan", "sinh", "cosh", "tanh",
+                "lcase", "strfmt", "sum", "sumk", "sumx", "sin", "cos", "tan", "acos", "asin", "atan", "sinh", "cosh", "tanh",
                 "atan2", "ceiling", "ceil", "floor", "truncate", "trunc", "sqrt", "todate", "fromindex",
                 "&gt;", "&lt;", "&amp;", "&amp;&amp;", "&lt;&gt;", "&lt;=", "&gt;=", "stringify", "parse", "data", "date", "perc",
-                "E", "10x", "+-", "-+", "dpush", "dpop", "dclr", "stack", "data", "swap"
+                "E", "10x", "+-", "-+", "dpush", "dpop", "dclr", "stack", "data", "swap", "rot"
             ];
         }
     }
@@ -35,54 +35,54 @@ class RPN {
                 switch (s) {
                     case "+":
                         {
-                            let b = stack.pop();
-                            let a = stack.pop();
-                            stack.push(a + b);
+                            let x = stack.pop();
+                            let y = stack.pop();
+                            stack.push(y + x);
                             break;
                         }
                     case "-":
                         {
-                            let b = stack.pop();
-                            let a = stack.pop();
-                            stack.push(a - b);
+                            let x = stack.pop();
+                            let y = stack.pop();
+                            stack.push(y - x);
                             break;
                         }
                     case "*":
                         {
-                            let b = stack.pop();
-                            let a = stack.pop();
-                            stack.push(a * b);
+                            let x = stack.pop();
+                            let y = stack.pop();
+                            stack.push(y * x);
                             break;
                         }
                     case "/":
                         {
-                            let b = stack.pop();
-                            let a = stack.pop();
-                            stack.push(a / b);
+                            let x = stack.pop();
+                            let y = stack.pop();
+                            stack.push(y / x);
                             break;
                         }
                     case "=":
                     case "==":
                         {
-                            let b = stack.pop();
-                            let a = stack.pop();
-                            stack.push(a == b);
+                            let x = stack.pop();
+                            let y = stack.pop();
+                            stack.push(y == x);
                             break;
                         }
                     case "!=":
                     case "&lt;&gt;":
                     case "<>":
                         {
-                            let b = stack.pop();
-                            let a = stack.pop();
-                            stack.push(a != b);
+                            let x = stack.pop();
+                            let y = stack.pop();
+                            stack.push(y != x);
                             break;
                         }
                     case "!":
                     case "not":
                         {
-                            let b = stack.pop();
-                            stack.push(!b);
+                            let x = stack.pop();
+                            stack.push(!x);
                             break;
                         }
                     case "&":
@@ -91,76 +91,76 @@ class RPN {
                     case "&amp;&amp;":
                     case "and":
                         {
-                            let b = stack.pop();
-                            let a = stack.pop();
-                            stack.push(a && b);
+                            let x = stack.pop();
+                            let y = stack.pop();
+                            stack.push(y && x);
                             break;
                         }
                     case "|":
                     case "||":
                     case "or":
                         {
-                            let b = stack.pop();
-                            let a = stack.pop();
-                            stack.push(a || b);
+                            let x = stack.pop();
+                            let y = stack.pop();
+                            stack.push(y || x);
                             break;
                         }
                     case "&gt;":
                     case ">":
                         {
-                            let b = stack.pop();
-                            let a = stack.pop();
-                            stack.push(a > b);
+                            let x = stack.pop();
+                            let y = stack.pop();
+                            stack.push(y > x);
                             break;
                         }
                     case "&lt;":
                     case "<":
                         {
-                            let b = stack.pop();
-                            let a = stack.pop();
-                            stack.push(a < b);
+                            let x = stack.pop();
+                            let y = stack.pop();
+                            stack.push(y < x);
                             break;
                         }
                     case "&gt;=":
                     case ">=":
                         {
-                            let b = stack.pop();
-                            let a = stack.pop();
-                            stack.push(a >= b);
+                            let x = stack.pop();
+                            let y = stack.pop();
+                            stack.push(y >= x);
                             break;
                         }
                     case "&lt;=":
                     case "<=":
                         {
-                            let b = stack.pop();
-                            let a = stack.pop();
-                            stack.push(a <= b);
+                            let x = stack.pop();
+                            let y = stack.pop();
+                            stack.push(y <= x);
                             break;
                         }
                     case "+=":
                         {
-                            let b = stack.pop();
-                            let a = stack.pop();
-                            stack.push(a += b);
+                            let x = stack.pop();
+                            let y = stack.pop();
+                            stack.push(y += x);
                             break;
                         }
                     case "-=":
                         {
-                            let b = stack.pop();
-                            let a = stack.pop();
-                            stack.push(a -= b);
+                            let x = stack.pop();
+                            let y = stack.pop();
+                            stack.push(y -= x);
                             break;
                         }
                     case "++":
                         {
-                            let b = stack.pop();
-                            stack.push(b + 1);
+                            let x = stack.pop();
+                            stack.push(x + 1);
                             break;
                         }
                     case "--":
                         {
-                            let b = stack.pop();
-                            stack.push(b - 1);
+                            let x = stack.pop();
+                            stack.push(x - 1);
                             break;
                         }
                     case "-+":
@@ -177,7 +177,7 @@ class RPN {
                     case "popx":
                         {
                             let temp = [];
-                            var x = stack.pop();
+                            let x = stack.pop();
                             for (let ix = 0; ix < x; ix++) {
                                 temp.push(stack.pop());
                             }
@@ -274,9 +274,9 @@ class RPN {
                         }
                     case "perc":
                         {
-                            var a = stack.pop();
-                            var b = stack.pop();
-                            stack.push(Math.round(100 * a / b));
+                            var x = stack.pop();
+                            var y = stack.pop();
+                            stack.push(Math.round(100 * x / y));
                             break;
                         }
                     case "fromindex":
@@ -302,9 +302,14 @@ class RPN {
                         break;
                     case "round":
                         {
-                            let x = Math.pow(10, stack.pop());
+                            let x = stack.pop();
                             let y = stack.pop();
-                            stack.push(Math.round(y * x) / x);
+                            if (y == null) {
+                                stack.push(Math.round(x));
+                            } else {
+                                x = Math.pow(10, x);
+                                stack.push(Math.round(y * x) / x);
+                            }
                             break;
                         }
                     case "exp":
@@ -330,17 +335,18 @@ class RPN {
                         {
                             let sum = 0;
                             while (stack.length > 0) {
-                                let val = stack.pop();
-                                sum += val;
+                                let x = stack.pop();
+                                sum += x;
                             }
                             stack.push(sum);
                             break;
                         }
+                    case "sumx":
                     case "sumk":
                         {
                             let sum = 0;
-                            let k = stack.pop();
-                            for (let ik = 0; ik < k; ik++) {
+                            let x = stack.pop();
+                            for (let ix = 0; ix < x; ix++) {
                                 let val = stack.pop();
                                 sum += val;
                             }
@@ -475,6 +481,16 @@ class RPN {
                             let x = stack.pop();
                             let y = stack.pop();
                             stack.push(x);
+                            stack.push(y);
+                            break;
+                        }
+                    case "rot":
+                        {
+                            let x = stack.pop();
+                            let y = stack.pop();
+                            let z = stack.pop();
+                            stack.push(x);
+                            stack.push(z);
                             stack.push(y);
                             break;
                         }

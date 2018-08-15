@@ -133,18 +133,18 @@ div.calculator div.keyboard > table > tbody > tr td table tr td span {
   opacity: .5;
 }
 div.calculator div.keyboard > table > tbody > tr td table tr td span.alt {
-  color: chartreuse;
+  color: mediumspringgreen;
   right: .5em;
 }
 div.calculator div.keyboard > table > tbody > tr td table tr td span.ctrl {
-  color: magenta;
+  color: #f283c9;
   left: .5em;
 }
 div.calculator div.keyboard > table > tbody > tr td table tr #control-key {
-  background-color: magenta;
+  background-color: mediumvioletred;
 }
 div.calculator div.keyboard > table > tbody > tr td table tr #alt-key {
-  background-color: chartreuse;
+  background-color: mediumspringgreen;
 }
 div.calculator.alt #falt {
   opacity: 1;

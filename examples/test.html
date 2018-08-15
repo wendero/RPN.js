@@ -10,6 +10,12 @@
         body {
             font: 12px Verdana;
         }
+        h1 {
+            margin-bottom: 0;
+        }
+        div#summary {
+            margin-bottom: 15px;
+        }
 
         div.test {
             padding: 2px;
@@ -60,6 +66,7 @@
 
 <body>
     <h1>RPN.js | Test Page</h1>
+    <div id="summary"></div>
     <script defer>
         function Run() {
             RPN.Test("Simple add", "1 1 + 2 2 2 + + +", 8);
@@ -93,7 +100,7 @@
             RPN.Test("Lob base 10", "pi log10", Math.log10(Math.PI));
             RPN.Test("Exp", "pi exp", Math.exp(Math.PI));
             RPN.Test("Sum", "1 2 3 5 8 13 21 sum", 53);
-            RPN.Test("Sum k items", "1 2 3 5 8 13 21 3 sumk", 42);
+            RPN.Test("Sum x items", "1 2 3 5 8 13 21 3 sumx", 42);
             RPN.Test("Sin", "pi sin", Math.sin(Math.PI));
             RPN.Test("Cos", "pi cos", Math.cos(Math.PI));
             RPN.Test("Tan", "0.5 tan", Math.tan(0.5));
@@ -184,6 +191,9 @@
             RPN.Test("Data Stack clear", "10 20 5 dpush 3 dpush dclr data", '[]');
             RPN.Test("RPN Stack", "5 2 3 stack", "[5,2,3]");
             RPN.Test("Swap", "1 5 swap stack", '[5,1]');
+            RPN.Test("Swap", "1 2 3 rot stack", '[3,1,2]');
+
+            document.getElementById("summary").innerText = RPN.getSummary();
         }
         Run();
     </script>
