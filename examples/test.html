@@ -191,7 +191,7 @@
             RPN.Test("Data Stack clear", "10 20 5 dpush 3 dpush dclr data", '[]');
             RPN.Test("RPN Stack", "5 2 3 stack", "[5,2,3]");
             RPN.Test("Swap", "1 5 swap stack", '[5,1]');
-            RPN.Test("Swap", "1 2 3 rot stack", '[3,1,2]');
+            RPN.Test("Rotate", "1 2 3 rot stack", '[3,1,2]');
 
             document.getElementById("summary").innerText = RPN.getSummary();
         }

@@ -115,7 +115,8 @@ Date Format | todate | Convert a date object into a specific string format: <br>
 | Pop | pop | Discards the top stack item | 3 5 pop | 3 |
 | Pop X | popx | Discard the *x* index item from stack (0...n) | 1 2 4 8 50 16 32 64 3 popx sum | Discards the item indexed 3 (50) and sum all others &rarr; 127 |
 | Clear | clr | Clear stack | 10 20 30 40 50 5 3 2 clr 1 | 1 |
-| Swap | swap | Swap past two stack entries | 10 20 swap | 10 |
+| Swap | swap | Swap past two stack entries | 10 20 swap | 20 10 |
+| Rotate | rot | Rotate past three stack entries | 10 20 30 rot | 30 10 20 |
 | Stack | stack | Return the stack JSON's | 5 2 3 stack | "[5,2,3]" |
 | Data Push | dpush | Insert value into data stack | 5 dpush data | "[5]" |
 | Data Pop | dpop | Get value from data stack | 5 dpush dpop | 5 |
