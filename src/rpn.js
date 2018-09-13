@@ -18,6 +18,9 @@ class RPN {
         return this.Eval(rpn, null, true);
     }
     static Eval(rpn, objects, returnStack) {
+        if(!rpn)
+            return rpn;
+            
         this.Init();
 
         let data = objects ? objects : [];
