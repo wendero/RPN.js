@@ -192,6 +192,9 @@
             RPN.Test("RPN Stack", "5 2 3 stack", "[5,2,3]");
             RPN.Test("Swap", "1 5 swap stack", '[5,1]');
             RPN.Test("Rotate", "1 2 3 rot stack", '[3,1,2]');
+            RPN.Test("Duplicate", "100 dup +", 200);
+            RPN.Test("Random", "rnd rnd 0 >= swap 1 <= &", true);
+            RPN.Test("Between", "100 200 btw dup 100 >= swap 200 <= &", true);
 
             document.getElementById("summary").innerText = RPN.getSummary();
         }

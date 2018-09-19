@@ -45,6 +45,8 @@ Single Evaluation will process just the latest operation and return the resultan
 | Round | round | Rounds y at x decimal places | pi 2 round<br>pi round | 3.14<br>3 |
 | Ceiling | ceiling | Next greater integer | 3.12534 ceiling | 4 |
 | Floor | floor | Next lesser integer | pi floor | 3 |
+| Random | rnd | Random number between [0,1) | rnd | random decimal |
+| Between | 100 200 btw | Random integer between [100,200] | 100 200 btw | random integer >= 100 and <= 200 |
 | Truncate | truncate | Ignore all decimal places | pi truncate | 3 |
 | Square root | sqrt | Square root of x | 25 sqrt | 5 |
 | Sum | sum | Sums the entire stack | 1 2 3 5 8 13 21 sum | 53 |
@@ -117,6 +119,7 @@ Date Format | todate | Convert a date object into a specific string format: <br>
 | Clear | clr | Clear stack | 10 20 30 40 50 5 3 2 clr 1 | 1 |
 | Swap | swap | Swap past two stack entries | 10 20 swap | 20 10 |
 | Rotate | rot | Rotate past three stack entries | 10 20 30 rot | 30 10 20 |
+| Duplicate | dup | Duplicate past entry | 100 dup + | 200 |
 | Stack | stack | Return the stack JSON's | 5 2 3 stack | "[5,2,3]" |
 | Data Push | dpush | Insert value into data stack | 5 dpush data | "[5]" |
 | Data Pop | dpop | Get value from data stack | 5 dpush dpop | 5 |

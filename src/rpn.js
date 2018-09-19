@@ -9,7 +9,7 @@ class RPN {
                 "lcase", "strfmt", "sum", "sumk", "sumx", "sin", "cos", "tan", "acos", "asin", "atan", "sinh", "cosh", "tanh",
                 "atan2", "ceiling", "ceil", "floor", "truncate", "trunc", "sqrt", "todate", "fromindex",
                 "&gt;", "&lt;", "&amp;", "&amp;&amp;", "&lt;&gt;", "&lt;=", "&gt;=", "stringify", "parse", "data", "date", "perc",
-                "E", "10x", "+-", "-+", "dpush", "dpop", "dclr", "stack", "data", "swap", "rot"
+                "E", "10x", "+-", "-+", "dpush", "dpop", "dclr", "stack", "data", "swap", "rot", "rnd", "random", "btw", "dup"
             ];
         }
     }
@@ -18,9 +18,9 @@ class RPN {
         return this.Eval(rpn, null, true);
     }
     static Eval(rpn, objects, returnStack) {
-        if(!rpn)
+        if (!rpn)
             return rpn;
-            
+
         this.Init();
 
         let data = objects ? objects : [];
@@ -425,6 +425,20 @@ class RPN {
                             stack.push(Math.floor(stack.pop()));
                             break;
                         }
+                    case "random":
+                    case "rnd":
+                        {
+                            stack.push(Math.random());
+                            break;
+                        }
+                    case "btw":
+                        {
+                            let x = stack.pop();
+                            let y = stack.pop();
+                            let rnd = Math.floor(Math.random() * (x - y+1)) + y;
+                            stack.push(rnd);
+                            break;
+                        }
                     case "if":
                         {
                             let value = stack.pop();
@@ -495,6 +509,13 @@ class RPN {
                             stack.push(x);
                             stack.push(z);
                             stack.push(y);
+                            break;
+                        }
+                    case "dup":
+                        {
+                            let x = stack.pop();
+                            stack.push(x);
+                            stack.push(x);
                             break;
                         }
                     case "stack":
