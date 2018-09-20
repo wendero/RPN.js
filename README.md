@@ -30,7 +30,7 @@ Single Evaluation will process just the latest operation and return the resultan
 | Subtraction | - | y - x | 10 7 - | 3 |
 | Multiplication | * | y * x | 2 5 * | 10 |
 | Division | / | y / x | 20 2 / | 10 |
-| Remainder | % | y % x | 11 3 / | 2 |
+| Remainder | % | y % x | 11 3 % | 2 |
 | Percent | *num*% | x percent of y | 500 10% + | 550 |
 | Percentage | perc | The percentage x is from y | 1000 670 perc | 67 |
 
